@@ -26,13 +26,14 @@ public class Shooting : MonoBehaviour
 	{
 
 		//Don't want to collide with the ship that's shooting this thing, nor another projectile.
-		if (col.gameObject != firing_ship && col.gameObject.tag != "Projectile")
+		if (col.gameObject != firing_ship && col.gameObject.tag != "Projectile" && col.gameObject.tag == "Enemy")
 		{
 			Instantiate(hit_effect, transform.position, Quaternion.identity);
+			Destroy(col.gameObject);
 			Destroy(gameObject);
 		}
+
 	}
 
-
-
+  
 }
