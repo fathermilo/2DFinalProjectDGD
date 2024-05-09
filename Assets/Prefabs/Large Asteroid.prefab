@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4883646308624522899}
   - component: {fileID: 7749066080468146579}
   - component: {fileID: 5328586506483854425}
-  - component: {fileID: 5744654370444490022}
-  - component: {fileID: -6943142758700960164}
+  - component: {fileID: 9014584861581711615}
+  - component: {fileID: 9193192839273052517}
   m_Layer: 0
   m_Name: Large Asteroid
   m_TagString: Enemy
@@ -141,20 +141,7 @@ PolygonCollider2D:
       - {x: 0.175, y: 0.055}
       - {x: 0.145, y: 0.145}
   m_UseDelaunayMesh: 0
---- !u!114 &5744654370444490022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7673403719331192148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24496e82c3b172c4184889924069df51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1
---- !u!50 &-6943142758700960164
+--- !u!50 &9014584861581711615
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -166,7 +153,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -181,3 +168,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &9193192839273052517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673403719331192148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24496e82c3b172c4184889924069df51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3

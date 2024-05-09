@@ -19,8 +19,8 @@ public class SpawnManager : MonoBehaviour
     {
         // spawns the enemy
         SpawnEnemyWave(waveNumber);
-       
-       
+
+    
     }
 
     // Update is called once per frame

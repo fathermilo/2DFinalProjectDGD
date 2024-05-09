@@ -16,8 +16,8 @@ public class Enemy : MonoBehaviour
     {
         enemyRb = GetComponent<Rigidbody2D>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        
 
+        Destroy(gameObject, 5f);
 
     }
 
@@ -29,10 +29,7 @@ public class Enemy : MonoBehaviour
         // which allows the enemy to try and keep up
         followPlayer();
 
-        if (transform.position.y < -13)
-        {
-            Destroy(gameObject);
-        }
+       
     }
 
     void followPlayer()
