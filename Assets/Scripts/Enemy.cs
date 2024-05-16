@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
 
     public float speed = 3.0f;
     private Rigidbody2D enemyRb;
@@ -18,7 +19,7 @@ public class Enemy : MonoBehaviour
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
 
         Destroy(gameObject, 5f);
-
+       
     }
 
     // Update is called once per frame
@@ -28,8 +29,7 @@ public class Enemy : MonoBehaviour
         // normalized means that the vector keeps the same direction but its length is 1.0
         // which allows the enemy to try and keep up
         followPlayer();
-
-       
+        
     }
 
     void followPlayer()

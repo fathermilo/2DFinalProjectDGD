@@ -5,56 +5,35 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public GameObject enemyPrefab; // Prefab of the enemy
+    public Transform spawnPoint; // Spawn point for the enemies
+    public float spawnInterval = 2f; // Interval between enemy spawns
+    public int numberOfEnemiesInGroup = 5; // Number of enemies to spawn in each group
+    public float distanceBetweenEnemies = 1.5f; // Distance between each enemy in the group
+    public float despawnDelay = 5f; // Delay before despawning enemies
 
-    public GameObject[] enemyPrefab;
-    private float spawnRange = 10.0f;
-    public int enemyCount;
-    public int waveNumber = 1;
-    
-    
-
-
-    // Start is called before the first frame update
     void Start()
     {
-        // spawns the enemy
-        SpawnEnemyWave(waveNumber);
-
-    
+        // Start spawning enemies
+        InvokeRepeating("SpawnEnemyGroup", spawnInterval, spawnInterval);
     }
 
-    // Update is called once per frame
-    void Update()
+    void SpawnEnemyGroup()
     {
-        enemyCount = FindObjectsOfType<Enemy>().Length;
-        if (enemyCount == 0)
-        {
-            waveNumber++;
-            SpawnEnemyWave(waveNumber);
-            
+        // Calculate random offsets for the entire group along the X and Y axes
+        float randomXOffset = Random.Range(-2f, 2f); // Adjust the range as needed
+        float randomYOffset = Random.Range(-2f, 2f); // Adjust the range as needed
 
+        // Calculate the starting position for the group of enemies
+        Vector3 startPosition = spawnPoint.position - new Vector3((numberOfEnemiesInGroup - 1) * distanceBetweenEnemies / 2f, 0f, 0f);
+
+        // Spawn each enemy in the group
+        for (int i = 0; i < numberOfEnemiesInGroup; i++)
+        {
+            Vector3 spawnPosition = startPosition + new Vector3(i * distanceBetweenEnemies, 0f, 0f) + new Vector3(randomXOffset, randomYOffset, 0f);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.Euler(0f, 0f, 90f));
+            Destroy(enemy, despawnDelay);
         }
     }
-
-    private Vector3 GenerateSpawnPosition()
-    {
-        // Randomized the enemy's spawnpoint in the game
-        float spawnPosY = Random.Range(8, spawnRange);
-        float spawnPosX = Random.Range(-spawnRange, spawnRange);
-        Vector3 randomPos = new Vector3(spawnPosX, spawnPosY, 0);
-        return randomPos;
-    }
-
-    void SpawnEnemyWave(int enemiesToSpawn)
-    {
-        for (int i = 0; i < enemiesToSpawn; i++)
-        {
-            int enemyIndex = Random.Range(0, enemyPrefab.Length);
-            Instantiate(enemyPrefab[enemyIndex], GenerateSpawnPosition(), enemyPrefab[enemyIndex].transform.rotation);
-        }
-
-    }
-
-    
-
 }
+
