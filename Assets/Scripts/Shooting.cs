@@ -22,5 +22,6 @@ public class Shooting : MonoBehaviour
             Destroy(col.gameObject); // Destroy the enemy
             Destroy(gameObject); // Destroy the bullet
         }
+
     }
 }

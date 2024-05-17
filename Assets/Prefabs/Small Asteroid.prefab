@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1774723214152850504}
   - component: {fileID: 7127004916947423803}
   - component: {fileID: 1170647957158604523}
-  - component: {fileID: -9085622279929653068}
   m_Layer: 0
   m_Name: Small Asteroid
   m_TagString: Enemy
@@ -140,30 +139,3 @@ PolygonCollider2D:
       - {x: 0.175, y: 0.055}
       - {x: 0.145, y: 0.145}
   m_UseDelaunayMesh: 0
---- !u!50 &-9085622279929653068
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7708281472524679007}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

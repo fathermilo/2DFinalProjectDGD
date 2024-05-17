@@ -4,39 +4,31 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    
+    public GameObject crashEffectPrefab; // Reference to the crash effect prefab
+    private Animator animator; // Reference to the Animator component
 
-    public float speed = 3.0f;
-    private Rigidbody2D enemyRb;
-    private PlayerController playerControllerScript;
-    
-
-
-    // Start is called before the first frame update
     void Start()
     {
-        enemyRb = GetComponent<Rigidbody2D>();
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        Destroy(gameObject, 5f);
-       
+        // Get the Animator component attached to this GameObject
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // follows the player at the same speed
-        // normalized means that the vector keeps the same direction but its length is 1.0
-        // which allows the enemy to try and keep up
-        followPlayer();
-        
+        // Check if the enemy collides with the player
+        if (other.CompareTag("Player"))
+        {
+            // Instantiate the crash effect at the enemy's position
+            Instantiate(crashEffectPrefab, transform.position, Quaternion.identity);
+
+            // Trigger the crash effect animation
+            animator.SetTrigger("Crash");
+
+            // Destroy the player GameObject
+            Destroy(other.gameObject);
+
+            // Destroy the enemy GameObject after a short delay to allow the animation to play
+            Destroy(gameObject, 0.5f); // Adjust delay as needed
+        }
     }
-
-    void followPlayer()
-    {
-        Vector3 lookDirection = (playerControllerScript.transform.position - transform.position).normalized;
-        enemyRb.AddForce(lookDirection * speed);
-    }
-
-
 }
