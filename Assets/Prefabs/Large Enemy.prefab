@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 591616980490768615}
   - component: {fileID: 470985585044864500}
   - component: {fileID: 5492871897902469739}
+  - component: {fileID: 5048263860388817729}
   m_Layer: 0
   m_Name: Large Enemy
   m_TagString: Enemy
@@ -174,6 +175,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+--- !u!114 &5048263860388817729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059958261726321106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24496e82c3b172c4184889924069df51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3693238732288429198
 GameObject:
   m_ObjectHideFlags: 0

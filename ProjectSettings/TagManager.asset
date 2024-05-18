@@ -7,6 +7,9 @@ TagManager:
   - Projectile
   - Enemy
   - PlayerBullet
+  - Powerup
+  - Asteroid
+  - Border
   layers:
   - Default
   - TransparentFX

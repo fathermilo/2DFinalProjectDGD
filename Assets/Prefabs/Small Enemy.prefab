@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5887121054134262477}
   - component: {fileID: 5333171713383650127}
   - component: {fileID: -5785330625753285500}
+  - component: {fileID: -7133934987896867025}
   m_Layer: 0
   m_Name: Small Enemy
   m_TagString: Enemy
@@ -173,7 +174,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a18d0f6d653e244b3b9cf2a163aeae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 1
+--- !u!114 &-7133934987896867025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238143143979245679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24496e82c3b172c4184889924069df51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3432649178909672873
 GameObject:
   m_ObjectHideFlags: 0

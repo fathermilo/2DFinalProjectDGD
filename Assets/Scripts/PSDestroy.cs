@@ -3,16 +3,16 @@ using System.Collections;
 
 public class PSDestroy : MonoBehaviour
 {
+    // Use this for initialization
+    void Start()
+    {
+        // Destroy the GameObject after the duration of the ParticleSystem
+        Destroy(gameObject, GetComponent<ParticleSystem>().main.duration);
+    }
 
-	// Use this for initialization
-	void Start()
-	{
-		Destroy(gameObject, GetComponent<ParticleSystem>().duration);
-	}
+    // Update is called once per frame
+    void Update()
+    {
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
+    }
 }

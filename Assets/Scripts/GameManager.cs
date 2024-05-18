@@ -3,95 +3,117 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] enemyPrefab; // Prefab of the enemy
+    public List<GameObject> targets;
     public Transform spawnPoint; // Spawn point for the enemies
-    public float spawnInterval = 2f; // Interval between enemy spawns
-    public float distanceBetweenEnemies = 1.5f; // Distance between each enemy in the group
-    public float despawnDelay = 5f; // Delay before despawning enemies
+    private float spawnRate = 2.0f;
     public GameObject[] powerupPrefab;
 
-    private float spawnRangeX = 15;
-    private float spawnPosZ = 15;
-
     private float spawnRange = 15;
-
-    public int currentWave = 1; // Track the current wave number
-    public int enemyCount;
     public bool isGameActive;
+
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highscoreText;
+    private static int score;
+    private static int highscoreCount;
+    public Button restartButton;
+    public GameObject titleScreen;
+    public TextMeshProUGUI gameOverText;
+    public GameObject powerupIndicator;
+
     void Start()
     {
-        
-        SpawnEnemyWave(currentWave);
-        // Start spawning enemies
-        InvokeRepeating("SpawnEnemyWave", 0f, spawnInterval);
+        // Load the high score from player preferences if it exists
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            highscoreCount = PlayerPrefs.GetInt("HighScore");
+        }
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // Find all GameObjects with the Enemy component and count them
-        enemyCount = FindObjectsOfType<EnemyMovement>().Length;
-        // Check if there are no enemies remaining in the scene
-        // Increment the wave number since all enemies have been defeated
-        // Spawn a new wave of enemies based on the updated wave number
-        // Spawn different prefabs
-        if (enemyCount == 0)
+        // Update the high score if the current score surpasses it
+        if (score > highscoreCount)
         {
-            currentWave++;
-            SpawnEnemyWave(currentWave);
-            SpawnPowerUps();
-
+            highscoreCount = score;
+            PlayerPrefs.SetInt("HighScore", highscoreCount);
         }
 
 
     }
 
-    void SpawnEnemyWave(int numberOfEnemies)
+    IEnumerator SpawnTarget()
     {
-        // Calculate the number of enemies for the current wave (starts with 1 for the first wave)
-
-
-        // Calculate the starting position for the group of enemies
-        Vector3 startPosition = spawnPoint.position - new Vector3((numberOfEnemies - 1) * distanceBetweenEnemies / 2f, 0f, 0f);
-
-        // Spawn each enemy in the wave
         while (isGameActive)
         {
-            for (int i = 0; i < numberOfEnemies; i++)
-            {
-                int enemyIndex = Random.Range(0, enemyPrefab.Length);
-                Vector3 spawnPosition = startPosition + new Vector3(i * distanceBetweenEnemies, 0f, 0f) + new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
-                GameObject enemy = Instantiate(enemyPrefab[enemyIndex], spawnPosition, Quaternion.Euler(0f, 0f, 90f));
-                Destroy(enemy, despawnDelay);
-            }
+            yield return new WaitForSeconds(spawnRate);
+            int index = Random.Range(0, targets.Count);
+            Vector3 spawnPosition = GenerateSpawnPosition();
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, 90); // Face downwards
+            Instantiate(targets[index], spawnPosition, spawnRotation);
         }
-
-
     }
+
     private Vector3 GenerateSpawnPosition()
     {
-        // Randomized the enemy's spawnpoint in the game
+        // Randomize the enemy's spawn point in the game
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
-        float spawnPosZ = Random.Range(-spawnRange, spawnRange);
-        Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
+        Vector3 randomPos = new Vector3(spawnPosX, 13, 0);
         return randomPos;
     }
 
-    void SpawnPowerUps()
-    {
-        while (isGameActive)
-        {
-            int powerupIndex = Random.Range(0, powerupPrefab.Length);
-            Instantiate(powerupPrefab[powerupIndex], GenerateSpawnPosition(), powerupPrefab[powerupIndex].transform.rotation);
-        }
-    }
+    
+
     public void StartGame(int difficulty)
     {
         isGameActive = true;
-        SpawnEnemyWave(currentWave);
-        spawnInterval /= difficulty;
+        StartCoroutine(SpawnTarget());
+        spawnRate /= difficulty;
+        titleScreen.gameObject.SetActive(false);
+        StartCoroutine(SpawnPowerUpsCoroutine());
+        score = 0;
+        UpdateScore(0);
+
+    }
+    public void GameOver()
+    {
+        restartButton.gameObject.SetActive(true);
+        gameOverText.gameObject.SetActive(true);
+        highscoreText.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(false);
+        isGameActive = false;
+        powerupIndicator.SetActive(false);
+
     }
 
+    public void RestartGame()
+    {
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator SpawnPowerUpsCoroutine()
+    {
+        while (isGameActive)
+        {
+            float spawnPosY = Random.Range(-spawnRange, spawnRange);
+            float spawnPosX = Random.Range(-spawnRange, spawnRange);
+            yield return new WaitForSeconds(3);
+            int powerupIndex = Random.Range(0, powerupPrefab.Length);
+            Instantiate(powerupPrefab[powerupIndex], new Vector3(spawnPosX, spawnPosY, 0), Quaternion.identity);
+        }
+    }
+
+    public void UpdateScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        scoreText.text = "Score: " + score;
+        highscoreText.text = "High Score: " + highscoreCount;
+    }
 }
